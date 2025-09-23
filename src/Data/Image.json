@@ -1,0 +1,16 @@
+{
+    "slides": [
+    {
+        "src" : "https://images.pexels.com/photos/135620/pexels-photo-135620.jpeg",
+        "alt" : "img1" 
+    },
+    {
+        "src" : "https://images.pexels.com/photos/298863/pexels-photo-298863.jpeg",
+        "alt" : "img2"  
+    },
+    {
+        "src" : "https://images.pexels.com/photos/325876/pexels-photo-325876.jpeg",
+        "alt" : "img3"   
+    }
+    ]
+}

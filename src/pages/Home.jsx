@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
+import { ImageSlide } from '../components/ImageSlide'
+import useFetch from "../useFetch";
+
+import { slides } from "../Data/Image.json"
+
+export const Home = () => {
+    const {data, loading, error } = useFetch(
+    "https://first-stop-db.vercel.app/category"
+ )
+
+  if (loading) {
+    return <p className="text-center mt-5">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-5 text-danger">Error: {error}</p>;
+  }
+
+  if (!data) {
+    return (
+      <div>
+        <p>"Data not available.</p>
+      </div>
+    );
+  };
+
+    return (
+        <>
+        <ImageSlide img={slides} />
+        <div className="App">
+            <div className="py-4">
+              <p className="display-3"><strong><u>Products Category</u></strong></p>
+            </div>
+            <div className="container">
+              <div className="row">
+              {data.map((image) => {
+                return (
+                  <div className="col-md-4" key={image.title}>
+                    <img src={image.src} alt={image.title} className="img img-fluid"/>
+                    <Link to={`/productList/${image.title}`} className="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover"><p className="display-6">{image.title}</p></Link>
+                  </div>
+                )
+              })}
+            </div>
+            </div>
+        </div>
+        </>
+    )
+}
+
+
