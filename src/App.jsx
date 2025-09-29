@@ -1,5 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+ import { ToastContainer, toast } from 'react-toastify';
 
 import Nav from './components/Nav'
 import { Footer } from './components/Footer'
@@ -19,6 +20,8 @@ import { SearchProvider } from './context/SearchContext'
 import { LoginProvider } from './context/LoginContext'
 
 function App() {
+      const notify = () => toast("Wow so easy!");
+  
   return (
     <LoginProvider>
     <CartProvider>
@@ -37,6 +40,10 @@ function App() {
         <Route path="/profile" element={<UserProfile />} /> 
         <Route path="/checkout" element={<Checkout />} /> 
       </Routes>
+      <div style={{ textAlign: "center" }}>
+  <button onClick={notify} className="notify-btn">Notify!</button>
+</div>
+       <ToastContainer />
       <Footer />
     </Router>
     </SearchProvider>
