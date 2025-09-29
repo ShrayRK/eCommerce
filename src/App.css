@@ -153,7 +153,37 @@ nav .links .nav-link:hover {
   justify-content: center; /* center buttons on mobile */
   padding-top: 1rem;
 }
+.notify-btn {
+  display: inline-block !important; /* force shrink to content */
+  width: auto !important;           /* don't stretch */
+  max-width: fit-content;           /* modern browsers */
+  align-self: center;               /* centers inside flex parent */
+  
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 1rem 0;
+}
 
+/* Hover */
+.notify-btn:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Active */
+.notify-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+    
 /* Tablet and desktop */
 @media (min-width: 768px) {
   .cardProduct {
