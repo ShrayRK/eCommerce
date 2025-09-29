@@ -3,11 +3,15 @@ import { Link, useLocation } from "react-router-dom"
 import { useCart } from "../context/CartContext";
 import { useSearch } from "../context/SearchContext";
 import { useLogin } from "../context/LoginContext"
+import { useWishList } from "../context/WishListContext";
 
 export default function Nav() {
     const { cart } = useCart();
     const { searchQuery, setSearchQuery } = useSearch();
     const { isLoggedIn, user, logoutUser } = useLogin();
+    const { wish } = useWishList();
+
+    const totalWish = wish.length;
     
     const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
 
@@ -58,7 +62,7 @@ export default function Nav() {
                         </li>
                         <li className="nav-item">
                             <Link to="/wishlist" className="nav-link">
-                                WishList
+                                WishList ({ totalWish })
                             </Link>
                         </li>
                         {isLoggedIn ? (

@@ -42,7 +42,7 @@ export const LoginProvider = ({children}) => {
 
  
   const addAddress = (newAddress) => {
-    if (newAddress.trim() === "") return; // Don't add empty addresses
+    if (newAddress.trim() === "") return; 
     setUser((prevUser) => {
       const updatedAddresses = [...(prevUser.addresses || []), newAddress.trim()];
       const updatedUser = { ...prevUser, addresses: updatedAddresses };

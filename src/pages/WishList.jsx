@@ -1,8 +1,10 @@
 import React from "react";
 import { useWishList } from "../context/WishListContext"
+import { useCart } from "../context/CartContext";
 
 export const WishList = () => {
     const { wish, removeFromList } = useWishList();
+    const { addToCart } = useCart();
 
     return(
         <div className="App container">
@@ -28,6 +30,7 @@ export const WishList = () => {
                     <p className="card-text"><strong>Price: </strong>{pData.price} $</p>
                   <div className="space">
                       <button type="button" className="btn btn-secondary" onClick={() => removeFromList(pData.brand)}>Remove</button>
+                      <button type="button" className="btn btn-secondary" onClick={() => addToCart(pData)}>Add To Cart</button>
                   </div>
                 </div>
               </div>

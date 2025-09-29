@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useLogin } from "../context/LoginContext";
 import { useNavigate } from "react-router-dom";
-
+import "./Checkout.css"
 
 export const Checkout = () => {
     const { cart, emptyCart } = useCart();
@@ -60,101 +60,127 @@ export const Checkout = () => {
     };
 
     return (
-        <div className="container py-5">
-            <h2 className="mb-4">Checkout</h2>
+       <div className="Checkout">
+         <div className="checkout-container container py-5">
+            <h2 className="checkout-title">Checkout</h2>
             {orderPlaced ? (
                 <div className="alert alert-success">
                     Your order has been placed successfully!
                     <p className="mt-3">You will be redirected to the order confirmation page.</p>
                 </div>
             ) : (
-                <form onSubmit={handlePlaceOrder}>
-                    <div className="card p-4 mb-4">
-                        <h4>Order Summary</h4>
-                        <ul className="list-group list-group-flush">
-                            {cart.map((item) => (
-                                <li key={item.brand} className="list-group-item d-flex justify-content-between align-items-center">
-                                    {item.brand} (x{item.qty})
-                                    <span>${(item.price * item.qty).toFixed(2)}</span>
-                                </li>
-                            ))}
-                            <li className="list-group-item d-flex justify-content-between align-items-center fw-bold">
-                                Total
-                                <span>${totalAmount.toFixed(2)}</span>
-                            </li>
-                        </ul>
-                    </div>
+               <form onSubmit={handlePlaceOrder}>
+              
+               <div className="card checkout-card">
+            <div className="col-md-12">
+           <div className="card-body">
+          <h4 className="mb-3">Order Summary</h4>
+          <ul className="list-group list-group-flush py-2">
+            {cart.map((item) => (
+              <li
+                key={item.brand}
+                className="list-group-item d-flex justify-content-between"
+              >
+                {item.brand} (x{item.qty})
+                <span>${(item.price * item.qty).toFixed(2)}</span>
+              </li>
+            ))}
+            <li className="list-group-item d-flex justify-content-between fw-bold">
+              Total
+              <span>${totalAmount.toFixed(2)}</span>
+            </li>
+          </ul>
+        </div>
+        </div>
+       <div className="col-md-12">
+        <div className="card-body">
+          <h4 className="mb-3">Shipping Address</h4>
+          {addresses.length > 0 ? (
+            <>
+              <p className="mb-2">Select a saved address:</p>
+              {addresses.map((addr, index) => (
+                <div className="form-check mb-2" key={index}>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="shippingAddress"
+                    id={`address-${index}`}
+                    value={addr}
+                    checked={selectedAddress === addr}
+                    onChange={() => {
+                      setSelectedAddress(addr);
+                      setTempNewAddressInput("");
+                    }}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor={`address-${index}`}
+                  >
+                    {addr}
+                  </label>
+                </div>
+              ))}
+            </>
+          ) : (
+            <p>No saved addresses. Please add one below.</p>
+          )}
 
-                    <div className="card p-4 mb-4 h-100">
-                        <h4>Shipping Address</h4>
-                        {addresses.length > 0 ? (
-                            <>
-                                <p className="mb-2">Select a saved address:</p>
-                                {addresses.map((addr, index) => (
-                                    <div className="form-check mb-2" key={index}>
-                                        <input
-                                            className="form-check-input"
-                                            type="radio"
-                                            name="shippingAddress"
-                                            id={`address-${index}`}
-                                            value={addr}
-                                            checked={selectedAddress === addr}
-                                            onChange={() => {
-                                                setSelectedAddress(addr);
-                                                setTempNewAddressInput(""); 
-                                            }}
-                                        />
-                                        <label className="form-check-label" htmlFor={`address-${index}`}>
-                                            {addr}
-                                        </label>
-                                    </div>
-                                ))}
-                            </>
-                        ) : (
-                            <p>No saved addresses. Please add one below.</p>
-                        )}
-                        <div className="form-check mt-3 mb-3">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="shippingAddress"
-                                id="newTempAddress"
-                                value="new"
-                                checked={selectedAddress === "new" || addresses.length === 0}
-                                onChange={() => setSelectedAddress("new")}
-                            />
-                            <label className="form-check-label" htmlFor="newTempAddress">
-                                Enter a new address
-                            </label>
-                        </div>
-                        {(selectedAddress === "new" || addresses.length === 0) && (
-                            <div className="mb-3">
-                                <label htmlFor="tempNewShippingAddress" className="form-label visually-hidden">New Shipping Address:</label>
-                                <textarea
-                                    id="tempNewShippingAddress"
-                                    className="form-control"
-                                    rows="3"
-                                    value={tempNewAddressInput}
-                                    onChange={(e) => setTempNewAddressInput(e.target.value)}
-                                    required={selectedAddress === "new" || addresses.length === 0}
-                                    placeholder="Enter full shipping address for this order"
-                                ></textarea>
-                            </div>
-                        )}
-                    </div>
+          {/* New address */}
+          <div className="form-check mt-3 mb-3">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="shippingAddress"
+              id="newTempAddress"
+              value="new"
+              checked={selectedAddress === "new" || addresses.length === 0}
+              onChange={() => setSelectedAddress("new")}
+            />
+            <label className="form-check-label" htmlFor="newTempAddress">
+              Enter a new address
+            </label>
+          </div>
+          {(selectedAddress === "new" || addresses.length === 0) && (
+            <div className="mb-3">
+              <textarea
+                id="tempNewShippingAddress"
+                className="form-control"
+                rows="7"
+                cols="90"
+                value={tempNewAddressInput}
+                onChange={(e) => setTempNewAddressInput(e.target.value)}
+                required={selectedAddress === "new" || addresses.length === 0}
+                placeholder="Enter full shipping address for this order"
+              ></textarea>
+            </div>
+          )}
+        </div>
+      
+    </div>
+               </div>
+               
 
-                    <button
-                        type="submit"
-                        className="btn btn-success btn-lg w-100"
-                        disabled={
-                            !(selectedAddress && selectedAddress !== "new") && 
-                            !(selectedAddress === "new" || addresses.length === 0 && tempNewAddressInput.trim() !== "") 
-                        }
-                    >
-                        Place Order
-                    </button>
-                </form>
+  <div className="row mt-4">
+    <div className="col-12">
+      <button
+        type="submit"
+        className="btn btn-success btn-lg w-100 place-order-btn"
+        disabled={
+          !(selectedAddress && selectedAddress !== "new") &&
+          !(
+            (selectedAddress === "new" || addresses.length === 0) &&
+            tempNewAddressInput.trim() !== ""
+          )
+        }
+      >
+        Place Order
+      </button>
+    </div>
+  </div>
+</form>
+
             )}
         </div>
+       </div>
     );
 };

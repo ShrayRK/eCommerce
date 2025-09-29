@@ -5,11 +5,12 @@ import { useCart } from "../context/CartContext";
 import { useWishList } from "../context/WishListContext";
 import { useSearch } from "../context/SearchContext";
 import useFetch from "../useFetch";
-
+import "../App.css"
 export const Products = () => {
-   const {data} = useFetch(
+   const {data, loading} = useFetch(
     "https://first-stop-db.vercel.app/products"
   );
+
     const { addToCart } = useCart();
     const { addToWishList, wish, removeFromList } = useWishList();
     const { searchQuery } = useSearch();
@@ -21,6 +22,7 @@ export const Products = () => {
     const [selectedPrice, setSelectedPrice] = useState("All")
 
   useEffect(() => {
+
     if (!data) return;
 
     let filtered = data;
@@ -112,10 +114,15 @@ export const Products = () => {
               </div>
                 </>
               )}
-              <div className="row">
-                {productData.map((pData) => {
+               <div className="row">
+                {productData.length === 0 ? (
+                        loading ?
+    <p className="text-center mt-5">Loading...</p>
+    :
+                  <p className = "text-center mt-5 display-6 fw-bold">No products found.</p>
+                ) : (
+                  productData.map((pData) => {
                   const inWishList = wish.some((item) => item.brand === pData.brand)
-
                 return (
                   <div className="col-md-6 mb-4" key={pData.brand}>
                    <div className="card">
@@ -139,7 +146,8 @@ export const Products = () => {
                   </div>
                   </div>
                 )
-              })}
+              })
+                 )}
               </div>
         </div>
         </>
