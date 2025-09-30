@@ -2,3 +2,10 @@
   "buildCommand": "vite build",
   "outputDirectory": "dist"
 }
+{
+  "build": {
+    "env": {
+      "NPM_FLAGS": "--legacy-peer-deps"
+    }
+  }
+}
