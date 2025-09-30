@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
 import { Link } from "react-router-dom"
 import { ImageSlide } from '../components/ImageSlide'
 import useFetch from "../useFetch";
@@ -25,6 +26,7 @@ export const Home = () => {
       </div>
     );
   };
+  const notify = () => toast("10% off on kids product!");
 
     return (
         <>
@@ -46,6 +48,10 @@ export const Home = () => {
             </div>
             </div>
         </div>
+         <div style={{ textAlign: "center" }}>
+          <button onClick={notify} className="notify-btn">Sale!</button>
+        </div>
+               <ToastContainer />
         </>
     )
 }
